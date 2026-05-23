@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+:root {
+  /* 🎨 Primary Brand Colors */
+  --color-bg-dark: #0b0c10; /* Deep charcoal background */
+  --color-bg-gradient-start: #0b0c10; /* Gradient start */
+  --color-bg-gradient-end: #1f2937; /* Gradient end (dark blue-gray) */
+  --color-primary-blue: #3b82f6; /* Electric blue for highlights */
+  --color-accent-orange: #f97316; /* Neon orange for buttons */
+  --color-text-light: #f9fafb; /* Light text */
+  --color-text-muted: #9ca3af; /* Muted gray text */
+  --color-border: #374151; /* Subtle border tone */
+
+  /* 🌟 UI States */
+  --color-hover-blue: #2563eb; /* Button hover blue */
+  --color-hover-orange: #ea580c; /* Button hover orange */
+  --color-shadow-glow: rgba(59, 130, 246, 0.4); /* Blue glow shadow */
+
+  /* 🧱 Gradients */
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary-blue),
+    var(--color-accent-orange)
+  );
+  --gradient-bg: linear-gradient(
+    to bottom right,
+    var(--color-bg-gradient-start),
+    var(--color-bg-gradient-end)
+  );
+}
+body {
+  background: var(--gradient-bg);
+  color: var(--color-text-light);
+  font-family: "Inter", sans-serif;
+}

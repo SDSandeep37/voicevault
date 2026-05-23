@@ -1,10 +1,11 @@
 import React from "react";
+import LandingPage from "./Sections/LandingPage/LandingPage";
 
 const App = () => {
   return (
-    <div className="bg-red-500 text-white text-5xl h-screen flex items-center justify-center">
-      Tailwind Working
-    </div>
+    <>
+      <LandingPage />
+    </>
   );
 };
 
