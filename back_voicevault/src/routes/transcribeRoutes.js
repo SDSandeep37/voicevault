@@ -1,5 +1,5 @@
 import express from "express";
-import { transcribeAudio } from "../controllers/transcribe.js";
+import { transcribeAudio } from "../controllers/transcribeController.js";
 import { uploadAudio } from "../upload.js";
 const router = express.Router();
 
