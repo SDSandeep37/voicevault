@@ -1,11 +1,15 @@
-import React from "react";
-import LandingPage from "./Sections/LandingPage/LandingPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./Pages/LandingPage/LandingPage";
+import ActionPage from "./Pages/ActionPage/ActionPage";
 
 const App = () => {
   return (
-    <>
-      <LandingPage />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/action" element={<ActionPage />} />
+      </Routes>
+    </Router>
   );
 };
 

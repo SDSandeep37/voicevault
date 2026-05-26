@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { LuAudioLines, LuClock3 } from "react-icons/lu";
 import "./landingPage.css";
+import { Link } from "react-router-dom";
 
 const features = [
   {
@@ -52,7 +53,9 @@ const LandingPage = () => {
           <a href="#">Features</a>
           <a href="#">Pricing</a>
           <a href="#">Login</a>
-          <button type="button">Get Started</button>
+          <Link to="/action">
+            <button type="button">Get Started</button>
+          </Link>
         </nav>
       </header>
 
@@ -67,14 +70,18 @@ const LandingPage = () => {
           <p>Convert speech to text quickly and securely with VoiceVault.</p>
 
           <div className="vv-actions">
-            <button className="vv-action upload" type="button">
-              <FaCloudUploadAlt />
-              Upload Audio
-            </button>
-            <button className="vv-action record" type="button">
-              <FaMicrophone />
-              Record Voice
-            </button>
+            <Link to="/action">
+              <button className="vv-action upload" type="button">
+                <FaCloudUploadAlt />
+                Upload Audio
+              </button>
+            </Link>
+            <Link to="/action">
+              <button className="vv-action record" type="button">
+                <FaMicrophone />
+                Record Voice
+              </button>
+            </Link>
           </div>
 
           <div className="vv-feature-row" aria-label="VoiceVault features">
