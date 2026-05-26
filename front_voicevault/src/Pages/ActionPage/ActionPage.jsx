@@ -13,6 +13,12 @@ const getSavedTranscriptionHistory = () => {
   }
 };
 
+const formatHistoryDate = (date) => {
+  if (!date) return "Unknown date";
+
+  return new Date(date).toLocaleString();
+};
+
 const ActionPage = () => {
   const [recording, setRecording] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -147,15 +153,19 @@ const ActionPage = () => {
         const audioBlob = new Blob(audioChunksRef.current, {
           type: mediaRecorder.mimeType || "audio/webm",
         });
-        const recordedFile = new File([audioBlob], `recording-${Date.now()}.webm`, {
-          type: audioBlob.type,
-        });
+        const recordedFile = new File(
+          [audioBlob],
+          `recording-${Date.now()}.webm`,
+          {
+            type: audioBlob.type,
+          },
+        );
 
         stopMediaStream();
         setRecording(false);
 
         const shouldTranscribe = window.confirm(
-          "Do you want to send this recording for transcription?"
+          "Do you want to send this recording for transcription?",
         );
 
         if (shouldTranscribe) {
@@ -295,21 +305,38 @@ const ActionPage = () => {
 
       {showHistory && (
         <div className="mt-6 w-full max-w-3xl bg-gray-900/70 px-6 py-5 rounded-lg border border-gray-700">
-          <h2 className="text-lg font-semibold text-white">
-            Transcription History
-          </h2>
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-lg font-semibold text-white">
+              Transcription History
+            </h2>
+            <span className="text-sm text-gray-400">
+              {history.length} {history.length === 1 ? "item" : "items"}
+            </span>
+          </div>
 
           {history.length === 0 ? (
             <p className="mt-3 text-gray-400">No history yet.</p>
           ) : (
-            <div className="mt-4 space-y-4">
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
               {history.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-lg border border-gray-700 bg-gray-800/60 p-4"
+                  className="rounded-lg border border-gray-700 bg-gray-800/70 p-4 shadow-lg transition hover:border-orange-500"
                 >
-                  <p className="text-sm text-gray-500">ID: {item.id}</p>
-                  <p className="mt-2 text-gray-300">{item.transcriptionText}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-sm font-semibold text-orange-400">
+                      Transcription
+                    </h3>
+                    <span className="shrink-0 rounded bg-gray-900 px-2 py-1 text-xs text-gray-400">
+                      {formatHistoryDate(item.createdAt)}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-gray-300">
+                    {item.transcriptionText}
+                  </p>
+                  <p className="mt-4 break-all border-t border-gray-700 pt-3 text-xs text-gray-500">
+                    ID: {item.id}
+                  </p>
                 </div>
               ))}
             </div>
