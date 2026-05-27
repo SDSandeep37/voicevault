@@ -24,7 +24,13 @@ export const transcribeAudio = async (request, response) => {
         message: "No audio file uploaded",
       });
     }
-
+    const { id } = request.user;
+    if (!id) {
+      return response.status(401).json({
+        success: false,
+        message: "Unauthorized: User ID not found in token",
+      });
+    }
     const uploadedAudio = await getUploadedAudio(file);
 
     const fullUrl = `${process.env.BASEURL}${uploadedAudio.name}`;
@@ -45,6 +51,7 @@ export const transcribeAudio = async (request, response) => {
       filename: uploadedAudio.name,
       audioUrl: fullUrl,
       transcriptionText: transcriptionText,
+      userId: id,
       status: "completed",
     });
     //remove the uploaded audio file after transcription
