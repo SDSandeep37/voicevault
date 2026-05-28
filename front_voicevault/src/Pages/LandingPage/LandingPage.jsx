@@ -10,6 +10,8 @@ import {
 import { LuAudioLines, LuClock3 } from "react-icons/lu";
 import "./landingPage.css";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserAuthContext } from "../../Contexts/AuthContext";
 
 const features = [
   {
@@ -38,6 +40,30 @@ const footerLinks = [
 ];
 
 const LandingPage = () => {
+  const { user, loading } = useContext(UserAuthContext);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_PUBLIC_API_URL}/user/logout`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        },
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Logout successful.");
+        window.location.href = "/";
+      } else {
+        alert("Logout failed. Refresh the page and please try again.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="voicevault-page">
       <header className="vv-navbar">
@@ -52,10 +78,28 @@ const LandingPage = () => {
           <a href="#">Home</a>
           <a href="#">Features</a>
           <a href="#">Pricing</a>
-          <a href="#">Login</a>
-          <Link to="/action">
-            <button type="button">Get Started</button>
-          </Link>
+          {user ? (
+            <p
+              className="text-red-400 hover:text-red-300 cursor-pointer"
+              onClick={handleLogout}
+            >
+              Logout
+            </p>
+          ) : (
+            <a href="/login">Login</a>
+          )}
+
+          {user ? (
+            <Link to="/action">
+              <button type="button" style={{ background: "green" }}>
+                Dashboard
+              </button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <button type="button">Get Started</button>
+            </Link>
+          )}
         </nav>
       </header>
 
@@ -70,18 +114,37 @@ const LandingPage = () => {
           <p>Convert speech to text quickly and securely with VoiceVault.</p>
 
           <div className="vv-actions">
-            <Link to="/action">
-              <button className="vv-action upload" type="button">
-                <FaCloudUploadAlt />
-                Upload Audio
-              </button>
-            </Link>
-            <Link to="/action">
-              <button className="vv-action record" type="button">
-                <FaMicrophone />
-                Record Voice
-              </button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/action">
+                  <button className="vv-action upload" type="button">
+                    <FaCloudUploadAlt />
+                    Upload Audio
+                  </button>
+                </Link>
+                <Link to="/action">
+                  <button className="vv-action record" type="button">
+                    <FaMicrophone />
+                    Record Voice
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="vv-action upload" type="button">
+                    <FaCloudUploadAlt />
+                    Upload Audio
+                  </button>
+                </Link>
+                <Link to="/login">
+                  <button className="vv-action record" type="button">
+                    <FaMicrophone />
+                    Record Voice
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="vv-feature-row" aria-label="VoiceVault features">

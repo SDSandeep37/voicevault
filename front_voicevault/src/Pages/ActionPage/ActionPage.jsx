@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { FaMicrophoneAlt } from "react-icons/fa";
-
+import { UserAuthContext } from "../../Contexts/AuthContext";
+import { Link } from "react-router-dom";
 const TRANSCRIPTION_HISTORY_KEY = "voicevault_transcription_history";
 
 const getSavedTranscriptionHistory = () => {
@@ -31,7 +32,18 @@ const ActionPage = () => {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const mediaStreamRef = useRef(null);
-
+  const { user, loading, logout } = useContext(UserAuthContext);
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
+  if (!user) {
+    window.location.href = "/login";
+    return null;
+  }
   const saveTranscriptionToHistory = (transcription) => {
     const historyItem = {
       id: transcription._id,
@@ -70,10 +82,11 @@ const ActionPage = () => {
       setStatus(`Uploading: ${file.name}`);
 
       const response = await fetch(
-        "http://localhost:5000/voicevault/transcribe/transcribe",
+        `${import.meta.env.VITE_PUBLIC_API_URL}/transcribe/transcribe`,
         {
           method: "POST",
           body: formData,
+          credentials: "include",
         },
       );
 
@@ -204,6 +217,22 @@ const ActionPage = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-blue-900 text-white flex flex-col items-center py-12">
+      <div className="w-full flex justify-between">
+        <button
+          onClick={logout}
+          style={{ marginLeft: "10px" }}
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded cursor-pointer self-end mr-10 mb-4 transition"
+        >
+          <Link to="/">Home</Link>
+        </button>
+        <button
+          onClick={logout}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer self-end mr-10 mb-4 transition"
+        >
+          Logout
+        </button>
+      </div>
+
       {/* Header */}
       <h1 className="text-center text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-orange-500">
         Upload or Record Your Audio
@@ -273,6 +302,10 @@ const ActionPage = () => {
           </div>
           <p className="mt-4 text-sm text-gray-400">
             {recording ? "Recording..." : "Ready to Record"}
+          </p>
+          <p className="mt-2 text-xs text-gray-500 text-center">
+            Sorry for inconvenience! but we only have language support for
+            English .
           </p>
         </div>
       </div>
