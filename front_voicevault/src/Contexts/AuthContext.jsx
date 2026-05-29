@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 export const UserAuthContext = createContext();
 
 export function UserAuthProvider({ children }) {
@@ -46,7 +46,8 @@ export function UserAuthProvider({ children }) {
       if (response.ok) {
         setUser(null);
         alert("Logout successful");
-        window.location.href = "/login";
+        // window.location.href = "/login";
+        <Link to="/login" />;
         //remove all the local storage data
         localStorage.clear();
       } else {

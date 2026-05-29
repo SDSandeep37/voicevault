@@ -85,7 +85,8 @@ const RegisterPage = () => {
           password: "",
           confirmPassword: "",
         });
-        window.location.href = "/action";
+        // window.location.href = "/action";
+        <Link to="/action" />;
       }
     } catch (error) {
       console.error("Register failed:", error);

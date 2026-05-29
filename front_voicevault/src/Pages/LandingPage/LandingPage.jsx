@@ -56,7 +56,8 @@ const LandingPage = () => {
       const result = await response.json();
       if (result.success) {
         alert("Logout successful.");
-        window.location.href = "/";
+        // window.location.href = "/";
+        <Link to="/" />;
       } else {
         alert("Logout failed. Refresh the page and please try again.");
       }

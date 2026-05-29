@@ -61,7 +61,8 @@ const LoginPage = () => {
       }
       setMessageType("success");
       setMessage(result.message);
-      window.location.href = "/action";
+      // window.location.href = "/action";
+      <Link to="/action" />;
     } catch (error) {
       console.error("Login failed:", error);
       setMessageType("error");
