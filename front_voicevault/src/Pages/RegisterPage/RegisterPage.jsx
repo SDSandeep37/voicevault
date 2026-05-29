@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -86,7 +87,7 @@ const RegisterPage = () => {
           confirmPassword: "",
         });
         // window.location.href = "/action";
-        <Link to="/action" />;
+        navigate("/action");
       }
     } catch (error) {
       console.error("Register failed:", error);

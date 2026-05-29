@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { LuAudioLines, LuClock3 } from "react-icons/lu";
 import "./landingPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserAuthContext } from "../../Contexts/AuthContext";
 
@@ -41,7 +41,7 @@ const footerLinks = [
 
 const LandingPage = () => {
   const { user, loading } = useContext(UserAuthContext);
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       const response = await fetch(
@@ -56,8 +56,7 @@ const LandingPage = () => {
       const result = await response.json();
       if (result.success) {
         alert("Logout successful.");
-        // window.location.href = "/";
-        <Link to="/" />;
+        navigate("/");
       } else {
         alert("Logout failed. Refresh the page and please try again.");
       }

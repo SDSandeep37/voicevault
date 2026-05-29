@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [messageType, setMessageType] = useState("");
@@ -62,7 +63,7 @@ const LoginPage = () => {
       setMessageType("success");
       setMessage(result.message);
       // window.location.href = "/action";
-      <Link to="/action" />;
+      navigate("/action");
     } catch (error) {
       console.error("Login failed:", error);
       setMessageType("error");

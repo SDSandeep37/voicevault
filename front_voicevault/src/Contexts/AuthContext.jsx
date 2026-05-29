@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export const UserAuthContext = createContext();
 
 export function UserAuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleApiCall();
@@ -47,7 +48,7 @@ export function UserAuthProvider({ children }) {
         setUser(null);
         alert("Logout successful");
         // window.location.href = "/login";
-        <Link to="/login" />;
+        navigate("/login");
         //remove all the local storage data
         localStorage.clear();
       } else {
