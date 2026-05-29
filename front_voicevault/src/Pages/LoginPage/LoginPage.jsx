@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -139,9 +139,12 @@ const LoginPage = () => {
         {/* Links */}
         <div className="flex justify-between mt-4 text-sm text-gray-400">
           <p>Not yet registered?</p>
-          <a href="/register" className="text-orange-500 hover:text-orange-400">
+          <Link
+            to="/register"
+            className="text-orange-500 hover:text-orange-400"
+          >
             Register Here
-          </a>
+          </Link>
         </div>
       </div>
     </div>
