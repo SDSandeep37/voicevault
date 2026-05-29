@@ -1,7 +1,7 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { UserAuthContext } from "../../Contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const TRANSCRIPTION_HISTORY_KEY = "voicevault_transcription_history";
 
 const getSavedTranscriptionHistory = () => {
@@ -21,6 +21,7 @@ const formatHistoryDate = (date) => {
 };
 
 const ActionPage = () => {
+  const navigate = useNavigate();
   const [recording, setRecording] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [status, setStatus] = useState("No Transcription Yet");
@@ -33,6 +34,12 @@ const ActionPage = () => {
   const audioChunksRef = useRef([]);
   const mediaStreamRef = useRef(null);
   const { user, loading, logout } = useContext(UserAuthContext);
+  useEffect(() => {
+    if (!loading && !user) {
+      // window.location.href = "/login";
+      navigate("/login");
+    }
+  }, [loading, user, navigate]);
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
@@ -41,7 +48,6 @@ const ActionPage = () => {
     );
   }
   if (!user) {
-    window.location.href = "/login";
     return null;
   }
   const saveTranscriptionToHistory = (transcription) => {
@@ -219,7 +225,6 @@ const ActionPage = () => {
     <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-blue-900 text-white flex flex-col items-center py-12">
       <div className="w-full flex justify-between">
         <button
-          onClick={logout}
           style={{ marginLeft: "10px" }}
           className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded cursor-pointer self-end mr-10 mb-4 transition"
         >

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserAuthContext } from "../../Contexts/AuthContext";
 const RegisterPage = () => {
+  const { refreshUser } = useContext(UserAuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -87,6 +89,7 @@ const RegisterPage = () => {
           confirmPassword: "",
         });
         // window.location.href = "/action";
+        await refreshUser();
         navigate("/action");
       }
     } catch (error) {

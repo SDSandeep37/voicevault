@@ -8,13 +8,23 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 
 const App = () => {
   return (
+    // <Router>
+    //   <UserAuthProvider>
+    //     <Routes>
+    //       <Route path="/" element={<LandingPage />} />
+    //       <Route path="/action" element={<ActionPage />} />
+    //       <Route path="/register" element={<RegisterPage />} />
+    //       <Route path="/login" element={<LoginPage />} />
+    //     </Routes>
+    //   </UserAuthProvider>
+    // </Router>
     <Router>
       <UserAuthProvider>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/action" element={<ActionPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route index element={<LandingPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="action" element={<ActionPage />} />
         </Routes>
       </UserAuthProvider>
     </Router>

@@ -29,7 +29,6 @@ export function UserAuthProvider({ children }) {
       setLoading(false);
     } catch (error) {
       console.error("Auth Context error ", error);
-      setLoading(false);
       setUser(null);
     } finally {
       setLoading(false);
@@ -60,7 +59,9 @@ export function UserAuthProvider({ children }) {
     }
   };
   return (
-    <UserAuthContext.Provider value={{ user, loading, logout }}>
+    <UserAuthContext.Provider
+      value={{ user, loading, logout, refreshUser: handleApiCall }}
+    >
       {children}
     </UserAuthContext.Provider>
   );

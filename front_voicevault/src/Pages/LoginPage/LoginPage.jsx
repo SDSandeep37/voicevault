@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserAuthContext } from "../../Contexts/AuthContext";
 const LoginPage = () => {
+  const { refreshUser } = useContext(UserAuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,8 +36,6 @@ const LoginPage = () => {
       handleApiCall();
     } catch (error) {
       console.log(error);
-    } finally {
-      timer();
     }
   };
   const handleApiCall = async () => {
@@ -63,11 +63,14 @@ const LoginPage = () => {
       setMessageType("success");
       setMessage(result.message);
       // window.location.href = "/action";
+      await refreshUser();
       navigate("/action");
     } catch (error) {
       console.error("Login failed:", error);
       setMessageType("error");
       setMessage("Some went wrong. Please try again!");
+    } finally {
+      timer();
     }
   };
   return (
