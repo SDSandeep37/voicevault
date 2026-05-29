@@ -40,7 +40,7 @@ const footerLinks = [
 ];
 
 const LandingPage = () => {
-  const { user, loading } = useContext(UserAuthContext);
+  const { user, loading, refreshUser } = useContext(UserAuthContext);
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -56,6 +56,7 @@ const LandingPage = () => {
       const result = await response.json();
       if (result.success) {
         alert("Logout successful.");
+        await refreshUser();
         navigate("/");
       } else {
         alert("Logout failed. Refresh the page and please try again.");
